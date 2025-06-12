@@ -1,1 +1,4 @@
-console.log("Hello, World!");
+export class Category {
+
+    constructor(public name: string) {}
+}
