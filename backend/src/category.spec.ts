@@ -1,5 +1,6 @@
 import { now } from "sequelize/types/utils";
-import { Category } from "./domain/entities/category";
+import { Category } from "./domain/entities/category/category";
+import { validate as uuidValidate, v4 as uuidV4 } from "uuid";
 
 describe("Category Tests", (): void => {
 
@@ -53,6 +54,22 @@ describe("Category Tests", (): void => {
         expect(category.isActive).toBe(true);
         expect(category.createdAt.getTime()).toBeGreaterThanOrEqual(before.getTime());
         expect(category.createdAt.getTime()).toBeLessThanOrEqual(after.getTime());
+    });
+
+    test("should automatically generate an id if not provided", () => {
+
+        const category: Category = new Category({ name: "Computer Science" });
+
+        expect(category.id).not.toBeNull();
+        expect(uuidValidate(category.id)).toBeTruthy();
+    });
+
+    test("Should use the provided id if approved", () => {
+
+        const id: string = uuidV4();
+        const category: Category = new Category({name: "Computer Science"}, id);
+
+        expect(category.id).toBe(id);
     });
 });
 
