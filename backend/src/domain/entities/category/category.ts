@@ -3,6 +3,8 @@ import CategoryID from "./category-id";
 import { AggregateRoot } from "domain/aggregate-root";
 import { CategoryCreatedEvent } from "domain/events/category/category-create-event";
 import { CategoryUpdateNameEvent } from "domain/events/category/category-update-name-event";
+import ValidationHandler from "domain/validation/validation-handler";
+import { CategoryValidation } from "./category-validation";
 
 export interface CategoryProperties {
   name: string;
@@ -58,8 +60,8 @@ export class Category extends AggregateRoot<CategoryID> {
     this._isActive = false;
   }
 
-  validate(): void {
-    throw new Error("Method not implemented.");
+  validate(handler: ValidationHandler): void {
+    new CategoryValidation(this, handler).validate();
   }
 
   get name(): string {

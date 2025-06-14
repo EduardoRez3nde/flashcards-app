@@ -1,4 +1,4 @@
-import { DomainError } from "./domain-error";
+import { Error } from "./error";
 
 export interface Validation<T> {
     validate(): T;
@@ -6,19 +6,19 @@ export interface Validation<T> {
 
 export default abstract class ValidationHandler {
 
-    abstract append(error: DomainError): ValidationHandler;
+    abstract appendError(error: Error): ValidationHandler;
 
-    abstract append(handler: ValidationHandler): ValidationHandler;
+    abstract addHandlers(handler: ValidationHandler): ValidationHandler;
 
     abstract validate<T>(validation: Validation<T>): T;
 
-    abstract getErrors(): DomainError[];
+    abstract getErrors(): Error[];
 
     hasError(): boolean {
         return this.getErrors() != null && this.getErrors().length > 0;
     }
 
-    firstError(): DomainError {
+    firstError(): Error {
         return (this.hasError()) ? this.getErrors()[0] : null;
     }
 }

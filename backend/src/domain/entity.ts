@@ -1,4 +1,5 @@
 import Identifier from "./identifier";
+import ValidationHandler from "./validation/validation-handler";
 
 
 export default abstract class Entity<ID extends Identifier<ID>> {
@@ -10,7 +11,7 @@ export default abstract class Entity<ID extends Identifier<ID>> {
         this._id = id;
     }
 
-    abstract validate(): void;
+    abstract validate(handler: ValidationHandler): void;
 
     get id(): ID {
         return this._id;

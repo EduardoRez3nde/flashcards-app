@@ -1,5 +1,5 @@
 
-export class DomainError {
+export class Error {
 
     constructor(readonly message: string) { }
 }
