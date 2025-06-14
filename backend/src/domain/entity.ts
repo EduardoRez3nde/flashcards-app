@@ -12,7 +12,7 @@ export default abstract class Entity<ID extends Identifier<ID>> {
 
     abstract validate(): void;
 
-    get getId(): ID {
+    get id(): ID {
         return this._id;
     }
 

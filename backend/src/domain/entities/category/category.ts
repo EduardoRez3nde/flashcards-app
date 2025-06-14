@@ -1,4 +1,8 @@
 import { v4 as uuidV4 } from "uuid";
+import CategoryID from "./category-id";
+import { AggregateRoot } from "domain/aggregate-root";
+import { CategoryCreatedEvent } from "domain/events/category/category-create-event";
+import { CategoryUpdateNameEvent } from "domain/events/category/category-update-name-event";
 
 export interface CategoryProperties {
   name: string;
@@ -6,34 +10,67 @@ export interface CategoryProperties {
   createdAt?: Date;
 }
 
-export class Category {
+export class Category extends AggregateRoot<CategoryID> {
     
-  readonly props: Required<CategoryProperties>;
-  private readonly _id: string;
+  private  _name: string;
+  private  _isActive: boolean;
+  private _createdAt: Date;
 
-  constructor(props: CategoryProperties, id?: string) {
-    
-    this._id = id || uuidV4();
-    this.props = {
-      ...props,
-      isActive: props.isActive ?? true,
-      createdAt: props.createdAt ?? new Date(),
+  private constructor(props: CategoryProperties, id?: CategoryID) {
+    super(id);
+    this._name = props.name;
+    this._isActive =  props.isActive;
+    this._createdAt = props.createdAt;
+  }
+
+  public static create(name: string): Category {
+
+    const id: CategoryID = CategoryID.unique();
+
+    const props: CategoryProperties = {
+      name,
+      isActive: true,
+      createdAt: new Date()
     };
+
+    const category: Category = new Category(props);
+
+    category.addEvent(CategoryCreatedEvent.create(id, name));
+
+    return category; 
+  }
+
+  public updateName(newName: string): void {
+
+    if (!newName || this.name.length === 0) {
+      throw new Error("Name cannot be empty");
+    }
+    this._name = newName;
+    
+    this.addEvent(CategoryUpdateNameEvent.create(this.id, this.name));
+  }
+
+  public activate(): void {
+    this._isActive = true;
+  }
+
+  public deactivate(): void {
+    this._isActive = false;
+  }
+
+  validate(): void {
+    throw new Error("Method not implemented.");
   }
 
   get name(): string {
-    return this.props.name;
+    return this.name;
   }
 
   get isActive(): boolean {
-    return this.props.isActive;
+    return this.isActive;
   }
 
   get createdAt(): Date {
-    return this.props.createdAt;
-  }
-
-  get id(): string {
-    return this._id;
+    return this.createdAt;
   }
 }

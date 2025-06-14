@@ -1,9 +1,9 @@
 import Entity from "./entity";
-import { DomainEvent } from "./events/domain-event";
+import { DomainEvent, DomainEventPublished } from "./events/domain-event";
 import Identifier from "./identifier";
 
 
-abstract class AggregateRoot<ID extends Identifier<any>> extends Entity<ID> {
+export abstract class AggregateRoot<ID extends Identifier<any>> extends Entity<ID> {
 
     private readonly _events: DomainEvent[] = [];
 
@@ -22,6 +22,16 @@ abstract class AggregateRoot<ID extends Identifier<any>> extends Entity<ID> {
 
     protected clearEvent(): void {
         this._events.length = 0;
+    }
+
+    protected publishedEvent(published: DomainEventPublished): void {
+
+        if (!published)
+            return;
+
+        this.events.forEach((event) => published.publishEvent(event));
+
+        this.clearEvent();
     }
 }
 

@@ -4,5 +4,5 @@ export interface DomainEvent {
 };
 
 export interface DomainEventPublished {
-    
+    publishEvent(event: DomainEvent): void;
 }
