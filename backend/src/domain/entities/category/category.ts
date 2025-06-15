@@ -1,10 +1,9 @@
-import { v4 as uuidV4 } from "uuid";
+import { AggregateRoot } from "../../aggregate-root";
 import CategoryID from "./category-id";
-import { AggregateRoot } from "domain/aggregate-root";
-import { CategoryCreatedEvent } from "domain/events/category/category-create-event";
-import { CategoryUpdateNameEvent } from "domain/events/category/category-update-name-event";
-import ValidationHandler from "domain/validation/validation-handler";
 import { CategoryValidation } from "./category-validation";
+import { CategoryCreatedEvent } from "../../events/category/category-create-event";
+import CategoryUpdateNameEvent from "../../events/category/category-update-name-event";
+import ValidationHandler from "../../validation/validation-handler";
 
 export interface CategoryProperties {
   name: string;
@@ -18,7 +17,7 @@ export class Category extends AggregateRoot<CategoryID> {
   private  _isActive: boolean;
   private _createdAt: Date;
 
-  private constructor(props: CategoryProperties, id?: CategoryID) {
+  private constructor(props: CategoryProperties, id: CategoryID) {
     super(id);
     this._name = props.name;
     this._isActive =  props.isActive;
@@ -35,7 +34,7 @@ export class Category extends AggregateRoot<CategoryID> {
       createdAt: new Date()
     };
 
-    const category: Category = new Category(props);
+    const category: Category = new Category(props, id);
 
     category.addEvent(CategoryCreatedEvent.create(id, name));
 
@@ -44,8 +43,8 @@ export class Category extends AggregateRoot<CategoryID> {
 
   public updateName(newName: string): void {
 
-    if (!newName || this.name.length === 0) {
-      throw new Error("Name cannot be empty");
+    if (!newName || newName.length === 0) {
+      throw new Error("Name cannot be empty or null");
     }
     this._name = newName;
     
@@ -65,14 +64,14 @@ export class Category extends AggregateRoot<CategoryID> {
   }
 
   get name(): string {
-    return this.name;
+    return this._name;
   }
 
   get isActive(): boolean {
-    return this.isActive;
+    return this._isActive;
   }
 
   get createdAt(): Date {
-    return this.createdAt;
+    return this._createdAt;
   }
 }

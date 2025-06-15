@@ -1,75 +1,56 @@
-import { now } from "sequelize/types/utils";
+import CategoryID from "./domain/entities/category/category-id";
 import { Category } from "./domain/entities/category/category";
-import { validate as uuidValidate, v4 as uuidV4 } from "uuid";
+import CategoryUpdateNameEvent from "./domain/events/category/category-update-name-event";
 
 describe("Category Tests", (): void => {
 
-    test("constructor of category", (): void => {
+    test("should create a category with a valid name.", (): void => {
 
-        const now = new Date();
+        const category: Category = Category.create("Computer Science");
 
-        const category: Category = new Category({
-            name: "Computer Science", 
-            isActive: true, 
-            createdAt: now,
-        });
-
-        expect(category.props).toStrictEqual({
-            name: "Computer Science", 
-            isActive: true, 
-            createdAt: now,
-        });
-
-        expect(category.createdAt).toBeInstanceOf(Date);
-    });
-
-    test("should set isActive to true if not provided", (): void => {
-
-        const now: Date = new Date();
-
-        const category: Category = new Category({
-            name: "Computer Science",
-            createdAt: now,
-        });
-
-        expect(category.props).toStrictEqual({
-            name: "Computer Science",
-            isActive: true,
-            createdAt: now,
-        });
-    });
-
-    test("should set createdAt to now if not provided", (): void => {
-        
-        const before: Date = new Date();
-
-        const category: Category = new Category({
-            name: "Math",
-            isActive: true
-        });
-
-        const after: Date = new Date();
-
-        expect(category.name).toBe("Math");
+        expect(category.id).toBeInstanceOf(CategoryID);
+        expect(category.name).toBe("Computer Science");
         expect(category.isActive).toBe(true);
-        expect(category.createdAt.getTime()).toBeGreaterThanOrEqual(before.getTime());
-        expect(category.createdAt.getTime()).toBeLessThanOrEqual(after.getTime());
+        expect(category.createdAt).toEqual(expect.any(Date));
+        expect(category.events).not.toBeNull();
     });
 
-    test("should automatically generate an id if not provided", () => {
+    test("Should update the category name with a new valid name.", (): void => {
 
-        const category: Category = new Category({ name: "Computer Science" });
+        const nameMaxLength: number = 150;
+        const nameMinLength: number = 5;
 
-        expect(category.id).not.toBeNull();
-        expect(uuidValidate(category.id)).toBeTruthy();
+        const category: Category = Category.create("Computer Science");
+
+        category.updateName("Mathematics");
+
+        expect(category.name).toBe("Mathematics");
+        expect(category.name.length).toBeGreaterThanOrEqual(nameMinLength);
+        expect(category.name.length).toBeLessThanOrEqual(nameMaxLength);
     });
 
-    test("Should use the provided id if approved", () => {
+    test("Should throw an error if the new name is empty or undefined", (): void => {
+        
+        const category: Category = Category.create("Computer Science");
 
-        const id: string = uuidV4();
-        const category: Category = new Category({name: "Computer Science"}, id);
+        expect(() => category.updateName(null as any))
+            .toThrow(new Error("Name cannot be empty or null"));
+    });
 
-        expect(category.id).toBe(id);
+    test("Should add the CategoryUpdateNameEvent event after updating.", (): void => {
+
+        const category: Category = Category.create("Computer Science");
+        category.clearEvent();
+        category.updateName("Programming");
+
+        expect(category.events).not.toBeNull();
+        expect(category.events).toHaveLength(1);
+
+        const event: CategoryUpdateNameEvent = category.events[0] as CategoryUpdateNameEvent;
+
+        expect(event).toBeInstanceOf(CategoryUpdateNameEvent);
+        expect(category.id).toBe(event.id);
+        expect(category.name).toBe(event.name);
     });
 });
 

@@ -1,7 +1,7 @@
-import Validator from "domain/validation/validator";
+import Validator from "../../validation/validator";
 import { Category } from "./category";
 import ValidationHandler from "domain/validation/validation-handler";
-import { Error } from "domain/validation/error";
+import { Error } from "../../validation/error";
 
 
 export class CategoryValidation extends Validator {
@@ -39,7 +39,7 @@ export class CategoryValidation extends Validator {
             return;
         }
 
-        if (name.length > CategoryValidation.NAME_MIN_LENGTH) {
+        if (name.length < CategoryValidation.NAME_MIN_LENGTH) {
             this.validationHandler().appendError(new Error("'name' must not be shorter than 150 characters"));
             return;
         }

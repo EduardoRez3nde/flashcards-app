@@ -1,5 +1,5 @@
 import Entity from "./entity";
-import { DomainEvent, DomainEventPublished } from "./events/domain-event";
+import { DomainEvent, DomainEventPublisher } from "./events/domain-event";
 import Identifier from "./identifier";
 
 
@@ -15,21 +15,21 @@ export abstract class AggregateRoot<ID extends Identifier<any>> extends Entity<I
         return this._events;
     }
 
-    protected addEvent(event: DomainEvent): void {
+    public addEvent(event: DomainEvent): void {
         if (!event) return;
         this._events.push(event);
     }
 
-    protected clearEvent(): void {
+    public clearEvent(): void {
         this._events.length = 0;
     }
 
-    protected publishedEvent(published: DomainEventPublished): void {
+    public publishedEvent(published: DomainEventPublisher): void {
 
         if (!published)
             return;
 
-        this.events.forEach((event) => published.publishEvent(event));
+        this.events.forEach((event) => published.dispatch(event));
 
         this.clearEvent();
     }

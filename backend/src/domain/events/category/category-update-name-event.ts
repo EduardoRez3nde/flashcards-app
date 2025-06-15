@@ -2,10 +2,10 @@ import CategoryID from "domain/entities/category/category-id";
 import { DomainEvent } from "../domain-event";
 
 
-export class CategoryUpdateNameEvent implements DomainEvent {
+export default class CategoryUpdateNameEvent implements DomainEvent {
 
-    private readonly id: CategoryID;
-    private readonly name: string;
+    public readonly id: CategoryID;
+    public readonly name: string;
     public readonly dateTimeOccurred: Date;    
 
     private constructor(id: CategoryID, name: string, dateTimeOccurred: Date) {

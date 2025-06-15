@@ -1,4 +1,4 @@
-    import Identifier from "domain/identifier";
+    import Identifier from "../../identifier";
     import { validate, v4 as uuid } from "uuid";
 
 

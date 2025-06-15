@@ -3,6 +3,6 @@ export interface DomainEvent {
     readonly dateTimeOccurred: Date;
 };
 
-export interface DomainEventPublished {
-    publishEvent(event: DomainEvent): void;
+export interface DomainEventPublisher {
+    dispatch(event: DomainEvent): void;
 }

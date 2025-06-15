@@ -1,16 +1,16 @@
-import CategoryID from "domain/entities/category/category-id";
+import CategoryID from "../../entities/category/category-id";
 import { DomainEvent } from "../domain-event";
 
 
 export class CategoryCreatedEvent implements DomainEvent {
 
-    private readonly id: CategoryID;
-    private readonly name: string;
+    private readonly _id: CategoryID;
+    private readonly _name: string;
     public readonly dateTimeOccurred: Date;    
 
     private constructor(id: CategoryID, name: string, dateTimeOccurred: Date) {
-        this.id = id;
-        this.name = name;
+        this._id = id;
+        this._name = name;
         this.dateTimeOccurred = dateTimeOccurred;
     }
 
