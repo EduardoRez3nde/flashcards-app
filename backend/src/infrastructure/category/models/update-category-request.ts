@@ -1,4 +1,4 @@
 export interface UpdateCategoryRequest {
-    name: string;
-    isActive: boolean;
+    readonly name: string;
+    readonly isActive: boolean;
 }

@@ -1,7 +1,7 @@
 
 export interface CategoryListResponse {
-    id: string;
-    name: string;
-    isActive: boolean;
-    createdAt: Date;
+    readonly id: string;
+    readonly name: string;
+    readonly isActive: boolean;
+    readonly createdAt: Date;
 }

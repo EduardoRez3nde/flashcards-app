@@ -1,4 +1,4 @@
 export interface CreateCategoryRequest {
-    name: string;
-    isActive: boolean;
+    readonly name: string;
+    readonly isActive: boolean;
 }
