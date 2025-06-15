@@ -4,7 +4,7 @@ import CategoryID from "./category-id";
 import { PaginationOutput } from "domain/pagination/pagination-output";
 
 
-interface CategoryFilter {
+export interface CategoryFilter {
     name?: string;
     isActive?: boolean;
 }
@@ -18,8 +18,6 @@ export interface CategoryRepository {
     update(category: Category): Promise<Category>;
 
     findById(id: CategoryID): Promise<Category | null>;
-
-    finAllPaginated(): Promise<Category[]>;
 
     search(searchInput: SearchInput<CategoryFilter>): Promise<PaginationOutput<Category>>;
 }

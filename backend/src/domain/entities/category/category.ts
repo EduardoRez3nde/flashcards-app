@@ -41,6 +41,10 @@ export class Category extends AggregateRoot<CategoryID> {
     return category; 
   }
 
+  public static with(id: CategoryID, props: CategoryProperties) {
+    return new Category(props, id);
+  }
+
   public updateName(newName: string): void {
 
     if (!newName || newName.length === 0) {
