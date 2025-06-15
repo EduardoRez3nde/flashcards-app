@@ -1,6 +1,6 @@
 import { UseCase } from "application/use-case";
 import CreateCategoryCommand from "./create-category-command";
-import { Either, left, right } from "application/use-case/utils/either";
+import { Either, left, right } from "application/utils/either";
 import CreateCategoryOutput from "./create-category-output";
 import { CategoryRepository } from "domain/entities/category/category-repository";
 import { Notification } from "domain/validation/handler/notification";

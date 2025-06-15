@@ -1,4 +1,4 @@
-import { DomainError } from "domain/errors/domain-error";
+import { DomainError } from "domain/validation/errors/domain-error";
 import { Error } from "../error";
 import ValidationHandler, { Validation } from "../validation-handler";
 

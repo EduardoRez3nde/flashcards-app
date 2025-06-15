@@ -3,4 +3,28 @@ services:
     build: .
     container_name: card-app
     volumes:
-      - .:/home/node/app
+      - card_app_data:/home/node/app
+    networks:
+      - card_app_net
+
+  db:
+    image: postgres:16-alpine
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: card_app_db
+    ports: 
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    networks:
+      - card_app_net
+
+volumes:
+  pg_data:
+  card_app_data:
+
+networks:
+  card_app_net:
