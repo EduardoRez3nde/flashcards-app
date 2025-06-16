@@ -50,6 +50,7 @@ server.register(swaggerUI, {
 
 
 server.register(categoryRoutes, { prefix: "/categories" });
+server.register(categoryRoutes, { prefix: "/categories/:id" });
 
 /**
  * Inicia o servidor para ouvir por requisições na porta especificada.

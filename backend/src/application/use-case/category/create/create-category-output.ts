@@ -1,5 +1,4 @@
 import { Category } from "domain/entities/category/category";
-import CategoryID from "domain/entities/category/category-id";
 
 
 export default class CreateCategoryOutput {

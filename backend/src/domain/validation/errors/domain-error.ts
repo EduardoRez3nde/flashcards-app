@@ -1,5 +1,3 @@
-import { Error } from "domain/validation/error";
-
 /**
  * Represents a domain-specific error that can aggregate multiple validation errors.
  * Extends the base Error class to include a list of related errors.

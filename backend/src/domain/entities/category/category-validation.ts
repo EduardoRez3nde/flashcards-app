@@ -45,25 +45,26 @@ export class CategoryValidation extends Validator {
      * - Must respect the maximum and minimum length limits.
      */
     private checkNameConstraints(): void {
+
         const name = this._category.name;
 
         if (name === null || name === undefined) {
-            this.validationHandler().appendError({ message: "'name' should not be null" });
+            this.validationHandler().appendError(new Error("'name' should not be null"));
             return;
         }
 
         if (name.trim().length === 0) {
-            this.validationHandler().appendError({ message: "'name' should not be empty or blank" });
+            this.validationHandler().appendError(new Error("'name' should not be empty or blank"));
             return;
         }
 
         if (name.length > CategoryValidation.NAME_MAX_LENGTH) {
-            this.validationHandler().appendError({ message: `'name' must not be longer than ${CategoryValidation.NAME_MAX_LENGTH} characters` });
+            this.validationHandler().appendError(new Error(`'name' must not be longer than ${CategoryValidation.NAME_MAX_LENGTH} characters`));
             return;
         }
 
         if (name.length < CategoryValidation.NAME_MIN_LENGTH) {
-            this.validationHandler().appendError({ message: `'name' must not be shorter than ${CategoryValidation.NAME_MIN_LENGTH} characters` });
+            this.validationHandler().appendError(new Error(`'name' must not be shorter than ${CategoryValidation.NAME_MIN_LENGTH} characters`));
             return;
         }
     }

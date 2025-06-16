@@ -5,7 +5,6 @@ import CreateCategoryOutput from "./create-category-output";
 import { CategoryRepository } from "domain/entities/category/category-repository";
 import { Notification } from "domain/validation/handler/notification";
 import { Category } from "domain/entities/category/category";
-import { Error } from "domain/validation/error";
 
 
 export class CreateCategoryUseCase implements 

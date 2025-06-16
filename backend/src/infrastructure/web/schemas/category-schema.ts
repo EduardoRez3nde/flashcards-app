@@ -1,3 +1,5 @@
+import { format } from "path";
+import { types } from "util";
 
 // Esquema para o corpo da requisição de criação de uma categoria
 export const CreateCategorySchema = {
@@ -16,7 +18,9 @@ export const CreateCategorySchema = {
             type: "object",
             properties: {
                 id: { type: "string" },
-                name: { name: "string" }
+                name: { type: "string" },
+                is_active: { type: "boolean" },
+                created_at: { type: "string", format: "date-time" }
             }
         },
     },
@@ -24,3 +28,29 @@ export const CreateCategorySchema = {
     tags: ["Categories"]
 };
 
+export const DeleteCategorySchema = {
+
+    params: {
+        type: "object",
+        properties: {
+            id: { type: "string", format: "uuid" }
+        },
+        required: ["id"],
+    },
+
+    response: {
+        "204": {
+            type: "null",
+            description: 'Category deleted successfully'
+        },
+         
+        "404": {
+            type: "object",
+            properties: {
+                message: { type: "string" }
+            }
+        }
+    },
+    summary: 'Deletes a category by its ID',
+    tags: ["Categories"],
+}

@@ -4,7 +4,7 @@ import CategoryUpdateNameEvent from "./domain/events/category/category-update-na
 
 describe("Category Tests", (): void => {
 
-    test("should create a category with a valid name.", (): void => {
+    it("Should be create a new category successfully", (): void => {
 
         const category: Category = Category.create("Computer Science");
 
@@ -15,7 +15,7 @@ describe("Category Tests", (): void => {
         expect(category.events).not.toBeNull();
     });
 
-    test("Should update the category name with a new valid name.", (): void => {
+    it("Should be update a category's name successfully", (): void => {
 
         const nameMaxLength: number = 150;
         const nameMinLength: number = 5;
@@ -29,7 +29,7 @@ describe("Category Tests", (): void => {
         expect(category.name.length).toBeLessThanOrEqual(nameMaxLength);
     });
 
-    test("Should throw an error if the new name is empty or undefined", (): void => {
+    it("Should be throw an error if the new name is empty or undefined", (): void => {
         
         const category: Category = Category.create("Computer Science");
 
@@ -37,7 +37,7 @@ describe("Category Tests", (): void => {
             .toThrow(new Error("Name cannot be empty or null"));
     });
 
-    test("Should add the CategoryUpdateNameEvent event after updating.", (): void => {
+    it("Should be add the CategoryUpdateNameEvent event after updating.", (): void => {
 
         const category: Category = Category.create("Computer Science");
         category.clearEvent();
@@ -51,6 +51,17 @@ describe("Category Tests", (): void => {
         expect(event).toBeInstanceOf(CategoryUpdateNameEvent);
         expect(category.id).toBe(event.id);
         expect(category.name).toBe(event.name);
+    });
+
+    it("Should be deactivating an active category", (): void => {
+
+        const category: Category = Category.create("Computer Science");
+
+        expect(category.isActive).toBe(true);
+        
+        category.deactivate();
+
+        expect(category.isActive).toBe(false);
     });
 });
 
