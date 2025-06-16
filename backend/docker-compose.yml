@@ -3,7 +3,7 @@ services:
     build: .
     container_name: card-app
     volumes:
-      - card_app_data:/home/node/app
+      - .:/home/node/app
     networks:
       - card_app_net
 
@@ -24,7 +24,6 @@ services:
 
 volumes:
   pg_data:
-  card_app_data:
 
 networks:
   card_app_net:
