@@ -6,7 +6,7 @@ import { CreateCategoryRequest } from "../controllers/category-controller";
 
 export const categoryRoutes = (fastify: FastifyInstance) => {
 
-    fastify.post("/categories", {
+    fastify.post("/", {
         schema: CreateCategorySchema,
         handler: (request: FastifyRequest<CreateCategoryRequest>, reply: FastifyReply) => categoryController.create(request, reply)
     });

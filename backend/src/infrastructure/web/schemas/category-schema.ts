@@ -8,19 +8,19 @@ export const CreateCategorySchema = {
             name: { type: "string", minLength: 5 },
             isActive: { type: "boolean" }
         },
-        require: ["name"]
+        required: ["name"]
     },
 
     response: {
-        201: {
+        "201": {
             type: "object",
             properties: {
                 id: { type: "string" },
                 name: { name: "string" }
             }
         },
-        summary: "Create a new category",
-        tags: ["Categories"]
-    }
+    },
+    summary: "Create a new category",
+    tags: ["Categories"]
 };
 
