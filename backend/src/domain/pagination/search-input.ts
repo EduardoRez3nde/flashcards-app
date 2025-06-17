@@ -3,7 +3,7 @@
  * 
  * @template Filter - The type of the filter criteria applied to the search.
  */
-export interface SearchInput<Filter = string> {
+export interface SearchInput<Filter> {
 
     /** The page number to retrieve (optional). */
     page?: number;
