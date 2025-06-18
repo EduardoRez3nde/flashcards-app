@@ -15,7 +15,6 @@ const deleteCategoryUseCase: DeleteCategoryUseCase = new DeleteCategoryUseCase(c
 
 const searchCategoryUseCase: SearchPaginatedCategoryUseCase = new SearchPaginatedCategoryUseCase(categoryRepository);
 
-
 export const categoryController = new CategoryController(
     createCategoryUseCase,
     deleteCategoryUseCase,

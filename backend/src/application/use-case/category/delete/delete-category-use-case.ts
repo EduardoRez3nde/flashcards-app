@@ -28,7 +28,7 @@ export class DeleteCategoryUseCase implements UseCase<DeleteCategoryCommand, Eit
 
         try {
             await this.categoryRepository.deleteById(id);
-            return right(undefined);
+            return right(new DeleteCategoryOutput());
             
         } catch(err) {
             notification.appendError(new Error((err as Error).message));

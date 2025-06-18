@@ -87,6 +87,18 @@ export class Category extends AggregateRoot<CategoryID> {
     this.addEvent(CategoryUpdateNameEvent.create(this.id, this.name));
   }
 
+  public updateCategory(name?: string, isActive?: boolean): void {
+    
+    if (name != null && this._name !== name) {
+        this._name = name;
+        this.addEvent(CategoryUpdateNameEvent.create(this.id, this._name));
+    }
+
+    if (isActive !== null && isActive !== undefined) {
+      (isActive) ? this.activate() : this.deactivate();
+    }
+  }
+
   /**
    * Activates the category.
    */

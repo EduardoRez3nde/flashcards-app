@@ -1,5 +1,40 @@
-import { format } from "path";
-import { types } from "util";
+const UpdateCategorySchema = {
+    summary: 'Atualizar uma categoria',
+    description: 'Atualiza parcialmente uma categoria existente (nome e/ou status) pelo seu ID.',
+    tags: ["Categories"],
+
+    body: {
+        type: "object",
+        minProperties: 1,
+        properties: {
+            name: { type: "string", minLength: 3, maxLength: 150 },
+            isActive: { type: "boolean" }
+        },
+        required: ["name"]
+    },
+
+    params: {
+        type: "object",
+        properties: {
+            id: { type: "string", format: "uuid" }
+        },
+        required: ["id"]
+    },
+
+    response: {
+        "200": {
+            description: "Categoria atualizada com sucesso.",
+            type: "null"
+        },
+        
+        "404": {
+            description: "Categoria não encontrada.",
+            type: "object",
+            properties: { message: { type: "string" } }
+        }
+    },
+};
+
 
 // Esquema para o corpo da requisição de criação de uma categoria
 export const CreateCategorySchema = {
