@@ -1,5 +1,5 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import { CreateCategorySchema, DeleteCategorySchema } from "../schemas/category-schema";
+import { CreateCategorySchema, DeleteCategorySchema, SearchCategorySchema } from "../schemas/category-schema";
 import { categoryController } from "../dependencies/category-dependencies";
 import { CategoryRequest } from "../controllers/category-controller";
 
@@ -11,9 +11,13 @@ export const categoryRoutes = (fastify: FastifyInstance) => {
         handler: (request: FastifyRequest<CategoryRequest>, reply: FastifyReply) => categoryController.create(request, reply)
     });
 
-    fastify.delete("/", {
+    fastify.delete("/:id", {
         schema: DeleteCategorySchema,
         handler: (request: FastifyRequest<CategoryRequest>, reply: FastifyReply) => categoryController.deleteById(request, reply)
     });
     
+    fastify.get("/", {
+        schema: SearchCategorySchema,
+        handler: (request: FastifyRequest<CategoryRequest>, reply: FastifyReply) => categoryController.findAll(request, reply)
+    });
 }  

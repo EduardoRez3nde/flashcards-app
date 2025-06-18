@@ -21,7 +21,7 @@ export default class CategoryID extends Identifier<string> {
      * 
      * @param id - UUID in string format.
      */
-    private constructor(id: string) {
+    private constructor(private readonly id: string) {
         super(id);
     }
 

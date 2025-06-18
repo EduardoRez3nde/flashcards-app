@@ -38,7 +38,7 @@ server.register(swagger, {
 
 /**
  * Regista o plugin do Swagger UI para criar uma página web interativa
- * com a documentação da sua API.
+ * com a documentação da API.
 */
 server.register(swaggerUI, {
     routePrefix: "/documentation",
@@ -48,9 +48,7 @@ server.register(swaggerUI, {
     }
 });
 
-
 server.register(categoryRoutes, { prefix: "/categories" });
-server.register(categoryRoutes, { prefix: "/categories/:id" });
 
 /**
  * Inicia o servidor para ouvir por requisições na porta especificada.

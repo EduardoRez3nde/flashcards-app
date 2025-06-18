@@ -7,6 +7,7 @@ import { CategoryFilter, CategoryRepository } from "domain/entities/category/cat
 import { PaginationOutput } from "domain/pagination/pagination-output";
 import { Notification } from "domain/validation/handler/notification";
 import { UnexpectedError } from "domain/validation/errors/unexpected-error";
+import { Category } from "@prisma/client";
 
 export class SearchPaginatedCategoryUseCase implements UseCase<SearchPaginatedCategoryCommand, Either<Notification, SearchPaginatedCategoryOutput>> {
 
@@ -23,14 +24,14 @@ export class SearchPaginatedCategoryUseCase implements UseCase<SearchPaginatedCa
                 filter: input.filter
             };
 
-            const searchResult: PaginationOutput = await this.categoryRepository.search(searchInput);
+            const searchResult = await this.categoryRepository.search(searchInput);
 
             const lastPage: number = (searchResult.perPage > 0) 
                     ? Math.ceil(searchResult.total / searchResult.perPage)
                     : 0;
 
-            const outputResult: CategoryOutput[] = searchResult.items.map(category => ({
-                id: category.id,
+            const outputResult = searchResult.items.map(category => ({
+                id: category.id.value,
                 name: category.name,
                 isActive: category.isActive,
                 createdAt: category.createdAt

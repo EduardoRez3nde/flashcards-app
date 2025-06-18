@@ -131,7 +131,7 @@ export class CategoryPrismaRepository implements CategoryRepository {
                 skip: offset,
                 take: perPage,
                 orderBy: {
-                    [searchInput.sort!]: searchInput.sort!,
+                    [searchInput.sort!]: searchInput.sortDir!,
                 },
             })
         ]);

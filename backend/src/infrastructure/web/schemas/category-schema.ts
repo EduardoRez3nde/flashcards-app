@@ -53,4 +53,43 @@ export const DeleteCategorySchema = {
     },
     summary: 'Deletes a category by its ID',
     tags: ["Categories"],
-}
+};
+
+export const SearchCategorySchema = {
+
+    quertString: {
+        type: "object",
+        properties: {
+            page: { type: "number", default: 1, minimum: 1 },
+            perPage: { type: "number", default: 15, minimum: 1 },
+            sort: { type: "string" },
+            sortDir: { type: "string", enum: ["asc", "desc"] },
+            name: { type: "string" },
+            isActive: { type: "boolean" }
+        }
+    },
+
+    response: {
+        "200": {
+            type: "object",
+            properties: {
+                items: {
+                    type: "array",
+                    items: {
+                        type: "object",
+                        properties: {
+                            id: { type: "string" },
+                            name: { type: "string" },
+                            isActive: { type: "boolean" },
+                            createdAt: { type: "string", format: "date-time" }
+                        }
+                    }
+                },
+                total: { type: "integer" },
+                currentPage: { type: "integer" },
+                lastPage: { type: "integer" },
+                perPage: { type: "integer" }
+            }
+        }
+    }
+};

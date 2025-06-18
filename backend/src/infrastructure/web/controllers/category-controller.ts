@@ -2,6 +2,9 @@ import CreateCategoryCommand from "application/use-case/category/create/create-c
 import { CreateCategoryUseCase } from "application/use-case/category/create/create-category-use-case";
 import { DeleteCategoryCommand } from "application/use-case/category/delete/delete-category-command";
 import { DeleteCategoryUseCase } from "application/use-case/category/delete/delete-category-use-case";
+import { SearchPaginatedCategoryCommand } from "application/use-case/category/retrieve/list/SearchPaginatedCategoryCommand";
+import { SearchPaginatedCategoryUseCase } from "application/use-case/category/retrieve/list/SearchPaginatedCategoryUseCase";
+import { CategoryFilter } from "domain/entities/category/category-repository";
 import { NotFoundError } from "domain/validation/errors/not-found-error";
 import { FastifyReply, FastifyRequest } from "fastify";
 
@@ -14,14 +17,23 @@ export interface CategoryRequest {
 
     Params: {
         id: string
-    }
-};
+    };
+    
+    Querystring: {
+        page?: number | 1;
+        perPage?: number | 10;
+        sort?: string | "createdAt";
+        sortDir?: "asc" | "desc";
+        filter?: CategoryFilter;
+    };
+}
 
 export class CategoryController {
 
     constructor(
         private readonly createCategoryUseCase: CreateCategoryUseCase,
         private readonly deleteCategoryUseCase: DeleteCategoryUseCase,
+        private readonly searchPaginatedCategoryUseCas: SearchPaginatedCategoryUseCase,
     ) { }
 
     async create(request: FastifyRequest<CategoryRequest>, reply: FastifyReply): Promise<FastifyReply> {
@@ -56,5 +68,35 @@ export class CategoryController {
             }
         }
         return reply.status(204).send();
+    }
+
+    async findAll(request: FastifyRequest<CategoryRequest>, reply: FastifyReply): Promise<FastifyReply> {
+
+        const { 
+            page = 1,
+            perPage = 10,
+            sort = "createdAt",
+            sortDir = "asc",
+            filter = {}
+        } = request.query as CategoryRequest["Querystring"];
+
+        const command: SearchPaginatedCategoryCommand = {
+            page: Number(page),
+            perPage: Number(perPage),
+            sort: sort,
+            sortDir: sortDir,
+            filter: {
+                name: filter.name,
+                isActive: filter.isActive
+            } 
+        };
+
+        const result =  await this.searchPaginatedCategoryUseCas.execute(command);
+
+        if (result.isRight()) {
+            return reply.status(200).send(result.value);
+        } else {
+            return reply.status(500).send({ error: "Internal Server Error", message: result.value.getErrors() });
+        }
     }
 }
