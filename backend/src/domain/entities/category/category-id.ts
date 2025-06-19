@@ -43,7 +43,7 @@ export default class CategoryID extends Identifier<string> {
      */
     public static from(id: string): CategoryID {
         if (!validate(id))
-            throw new Error("Invalid UUID format");
+            throw new Error(`Invalid UUID format: ${id}`)
         return new CategoryID(id);
     }
 }
