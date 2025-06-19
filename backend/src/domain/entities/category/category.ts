@@ -36,8 +36,8 @@ export class Category extends AggregateRoot<CategoryID> {
   private constructor(props: CategoryProperties, id: CategoryID) {
     super(id);
     this._name = props.name;
-    this._isActive = props.isActive;
-    this._createdAt = props.createdAt;
+    this._isActive = props.isActive ?? true;
+    this._createdAt = props.createdAt ?? new Date();
   }
 
   /**
@@ -52,8 +52,6 @@ export class Category extends AggregateRoot<CategoryID> {
     const id: CategoryID = CategoryID.unique();
     const props: CategoryProperties = {
       name,
-      isActive: true,
-      createdAt: new Date()
     };
 
     const category: Category = new Category(props, id);

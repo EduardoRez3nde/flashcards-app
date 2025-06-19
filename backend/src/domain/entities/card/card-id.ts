@@ -4,7 +4,7 @@ import { validate } from "uuid";
 
 export default class CardID extends Identifier<string> {
 
-    constructor(private readonly id: string) {
+    constructor(id: string) {
         super(id);
     }
 
@@ -19,3 +19,4 @@ export default class CardID extends Identifier<string> {
         return new CardID(id);
     }
 }
+
