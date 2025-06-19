@@ -4,6 +4,8 @@ import { DeleteCategoryCommand } from "application/use-case/category/delete/dele
 import { DeleteCategoryUseCase } from "application/use-case/category/delete/delete-category-use-case";
 import { SearchPaginatedCategoryCommand } from "application/use-case/category/retrieve/list/SearchPaginatedCategoryCommand";
 import { SearchPaginatedCategoryUseCase } from "application/use-case/category/retrieve/list/SearchPaginatedCategoryUseCase";
+import { UpdateCategoryCommand } from "application/use-case/category/update/update-category-command";
+import { UpdateCategoryUseCase } from "application/use-case/category/update/update-category-use-case";
 import { CategoryFilter } from "domain/entities/category/category-repository";
 import { NotFoundError } from "domain/validation/errors/not-found-error";
 import { FastifyReply, FastifyRequest } from "fastify";
@@ -34,6 +36,7 @@ export class CategoryController {
         private readonly createCategoryUseCase: CreateCategoryUseCase,
         private readonly deleteCategoryUseCase: DeleteCategoryUseCase,
         private readonly searchPaginatedCategoryUseCas: SearchPaginatedCategoryUseCase,
+        private readonly updateCategoryUseCase: UpdateCategoryUseCase,
     ) { }
 
     async create(request: FastifyRequest<CategoryRequest>, reply: FastifyReply): Promise<FastifyReply> {
@@ -97,6 +100,31 @@ export class CategoryController {
             return reply.status(200).send(result.value);
         } else {
             return reply.status(500).send({ error: "Internal Server Error", message: result.value.getErrors() });
+        }
+    }
+
+    async update(request: FastifyRequest<CategoryRequest>, reply: FastifyReply): Promise<FastifyReply> {
+
+        const command: UpdateCategoryCommand = {
+            id: request.params.id,
+            name: request.body.name,
+            isActive: request.body.isActive
+        };
+
+        const result = await this.updateCategoryUseCase.execute(command);
+
+        if (result.isRight()) {
+            return reply.status(200).send(result.value);
+        } 
+        else {
+            const firstError = result.value.getErrors()[0];
+            
+            if (firstError instanceof NotFoundError) {
+                return reply.status(404).send({ message: firstError.message });
+            }
+            else {
+                return reply.status(422).send(result.value);
+            }
         }
     }
 }

@@ -27,6 +27,7 @@ export class CreateCategoryUseCase implements
             await this.categoryRepository.create(category);
             const output: CreateCategoryOutput = CreateCategoryOutput.of(category);
             return right(output);
+            
         } catch (error) {
             const notificationError: Notification = Notification.create();
             notificationError.appendError(new Error("Database Error"));

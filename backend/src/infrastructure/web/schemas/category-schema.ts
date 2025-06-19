@@ -1,4 +1,4 @@
-const UpdateCategorySchema = {
+export const UpdateCategorySchema = {
     summary: 'Atualizar uma categoria',
     description: 'Atualiza parcialmente uma categoria existente (nome e/ou status) pelo seu ID.',
     tags: ["Categories"],

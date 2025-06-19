@@ -5,6 +5,7 @@ import { CreateCategoryUseCase } from "application/use-case/category/create/crea
 import { CategoryController } from "../controllers/category-controller";
 import { DeleteCategoryUseCase } from "application/use-case/category/delete/delete-category-use-case";
 import { SearchPaginatedCategoryUseCase } from "application/use-case/category/retrieve/list/SearchPaginatedCategoryUseCase";
+import { UpdateCategoryUseCase } from "application/use-case/category/update/update-category-use-case";
 
 
 const categoryRepository: CategoryRepository = new CategoryPrismaRepository(prisma);
@@ -15,8 +16,11 @@ const deleteCategoryUseCase: DeleteCategoryUseCase = new DeleteCategoryUseCase(c
 
 const searchCategoryUseCase: SearchPaginatedCategoryUseCase = new SearchPaginatedCategoryUseCase(categoryRepository);
 
+const updateCategoryUseCase: UpdateCategoryUseCase = new UpdateCategoryUseCase(categoryRepository);
+
 export const categoryController = new CategoryController(
     createCategoryUseCase,
     deleteCategoryUseCase,
     searchCategoryUseCase,
+    updateCategoryUseCase,
 );
