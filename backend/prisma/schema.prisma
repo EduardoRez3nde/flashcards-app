@@ -7,9 +7,47 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
 model Category {
-  id        String    @id   @default(uuid())
-  name      String 
-  isActive  Boolean
-  createdAt DateTime        @default(now())
+  id        String    @id @default(uuid())
+  name      String    @unique
+  isActive  Boolean   @default(true)
+  createdAt DateTime  @default(now())
+
+  subjects  Subject[]
+
+  @@map("tb_categories")
+}
+
+model Subject {
+  id          String    @id @default(uuid())
+  name        String
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id])
+  
+  cards       Card[]
+
+  @@unique([name, categoryId])
+  @@map("tb_subjects")
+}
+
+model Card {
+  id              String    @id @default(uuid())
+  name            String
+  description     String    @db.Text
+  language        String?
+  codeContent     String?   @db.Text
+  
+  isActive        Boolean   @default(true)
+  // isReviewed      Boolean   @default(false)
+
+  createdAt       DateTime  @default(now())
+
+  subjectId       String
+  subject         Subject   @relation(fields: [subjectId], references: [id])
+
+  @@map("tb_cards")
 }

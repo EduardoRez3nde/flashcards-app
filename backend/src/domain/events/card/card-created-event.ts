@@ -19,4 +19,8 @@ export class CardCreatedEvent implements DomainEvent {
     public static create(id: CardID, name: string, description: string): CardCreatedEvent {
         return new CardCreatedEvent(id, name, description, new Date());
     }
+
+    get id(): CardID { return this._id; }
+    get name(): string { return this._name; }
+    get description(): string { return this._description; }
 }
