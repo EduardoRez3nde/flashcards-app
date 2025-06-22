@@ -49,7 +49,7 @@ export default abstract class ValidationHandler {
      * 
      * @returns True if there are any errors, false otherwise.
      */
-    hasError(): boolean {
+    public hasError(): boolean {
         return this.getErrors() != null && this.getErrors().length > 0;
     }
 
@@ -58,7 +58,7 @@ export default abstract class ValidationHandler {
      * 
      * @returns The first error or null if none exist.
      */
-    firstError(): Error {
+    public firstError(): Error {
         return (this.hasError()) ? this.getErrors()[0] : null;
     }
 }
