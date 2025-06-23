@@ -35,6 +35,18 @@ export class Subject extends AggregateRoot<SubjectID> {
         return subject;
     }
 
+    public update(props: { name?: string; isActive?: boolean; categoryID?: CategoryID }): void {
+        if (props.name != null) {
+            this._name = props.name;
+        }
+        if (props.isActive != null) {
+            this._isActive = props.isActive;
+        }
+        if (props.categoryID != null && !this._categoryID.equals(props.categoryID)) {
+            this._categoryID = props.categoryID;
+        }
+    }
+
     public static with(id: SubjectID, input: { name: string, categoryID: CategoryID }): Subject {
         return new Subject(id, input);
     }
@@ -52,7 +64,7 @@ export class Subject extends AggregateRoot<SubjectID> {
         this._isActive = false;
     }
 
-    validate(handler: ValidationHandler): void {
+    public validate(handler: ValidationHandler): void {
         new SubjectValidation(this, handler).validate();
     }
 }
