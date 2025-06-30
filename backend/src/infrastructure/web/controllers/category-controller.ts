@@ -2,8 +2,8 @@ import CreateCategoryCommand from "application/use-case/category/create/create-c
 import { CreateCategoryUseCase } from "application/use-case/category/create/create-category-use-case";
 import { DeleteCategoryCommand } from "application/use-case/category/delete/delete-category-command";
 import { DeleteCategoryUseCase } from "application/use-case/category/delete/delete-category-use-case";
-import { SearchPaginatedCategoryCommand } from "application/use-case/category/retrieve/list/SearchPaginatedCategoryCommand";
-import { SearchPaginatedCategoryUseCase } from "application/use-case/category/retrieve/list/SearchPaginatedCategoryUseCase";
+import { SearchPaginatedCategoryCommand } from "application/use-case/category/retrieve/list/search-paginated-category-command";
+import { SearchPaginatedCategoryUseCase } from "application/use-case/category/retrieve/list/search-paginated-category-use-case";
 import { UpdateCategoryCommand } from "application/use-case/category/update/update-category-command";
 import { UpdateCategoryUseCase } from "application/use-case/category/update/update-category-use-case";
 import { CategoryFilter } from "domain/entities/category/category-repository";

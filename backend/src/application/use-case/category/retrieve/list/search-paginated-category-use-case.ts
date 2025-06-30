@@ -1,7 +1,7 @@
 import { UseCase } from "application/use-case";
-import { SearchPaginatedCategoryCommand } from "./SearchPaginatedCategoryCommand";
+import { SearchPaginatedCategoryCommand } from "./search-paginated-category-command";
 import { Either, left, right } from "application/utils/either";
-import { CategoryOutput, SearchPaginatedCategoryOutput } from "./SearchPaginatedCategoryOutput";
+import { CategoryOutput, SearchPaginatedCategoryOutput } from "./search-paginated-category-output";
 import { SearchInput } from "domain/pagination/search-input";
 import { CategoryFilter, CategoryRepository } from "domain/entities/category/category-repository";
 import { PaginationOutput } from "domain/pagination/pagination-output";

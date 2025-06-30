@@ -4,7 +4,7 @@ import { CategoryPrismaRepository } from "infrastructure/database/repositories/c
 import { CreateCategoryUseCase } from "application/use-case/category/create/create-category-use-case";
 import { CategoryController } from "../controllers/category-controller";
 import { DeleteCategoryUseCase } from "application/use-case/category/delete/delete-category-use-case";
-import { SearchPaginatedCategoryUseCase } from "application/use-case/category/retrieve/list/SearchPaginatedCategoryUseCase";
+import { SearchPaginatedCategoryUseCase } from "application/use-case/category/retrieve/list/search-paginated-category-use-case";
 import { UpdateCategoryUseCase } from "application/use-case/category/update/update-category-use-case";
 
 
