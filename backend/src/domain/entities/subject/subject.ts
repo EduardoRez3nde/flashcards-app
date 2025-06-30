@@ -47,7 +47,7 @@ export class Subject extends AggregateRoot<SubjectID> {
         }
     }
 
-    public static with(id: SubjectID, input: { name: string, categoryID: CategoryID }): Subject {
+    public static with(id: SubjectID, input: { name: string, isActive: boolean, createdAt: Date, categoryID: CategoryID }): Subject {
         return new Subject(id, input);
     }
 
